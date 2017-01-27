@@ -30,14 +30,12 @@ for k=1:numberOfCircles
     fractionOutside = sum(pointsOutsideCircle(:,k))/numSamples;
     
     set(gca,'fontsize',14)
-    
 
-    plot(xCoord, yCoord, 'DisplayName', strcat('cos(x)' , num2str(k)))
-
-    legend('show');
-    
+    plot(xCoord, yCoord, 'DisplayName', strcat('cos(x)' , num2str(k)))    
     
 end
+
+    legend('show');
 
 %samplePlot;
 
