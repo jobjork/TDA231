@@ -38,7 +38,5 @@ end
     legend('show');
 
 %samplePlot;
-
-
 end
 
