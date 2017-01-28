@@ -31,7 +31,7 @@ for k=1:numberOfCircles
     
     set(gca,'fontsize',14)
 
-    plot(xCoord, yCoord, 'DisplayName', strcat('cos(x)' , num2str(k)))    
+    plot(xCoord, yCoord, 'DisplayName', strcat('cos(x)' , num2str(8k)))    
     
 end
 
