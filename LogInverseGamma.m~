@@ -1,12 +1,15 @@
-function logInverseGammaOutput = LogInverseGamma(s, alpha, beta)
+function logInverseGammaOutput = LogInverseGamma(s, alpha, beta, n)
+
+logVal1 = alpha*log(beta);
+logVal2 = -(alpha + 1).*log(s);
+logVal3 = -beta./s;
 
 if alpha <=1
-    logInverseGammaOutput = alpha*log(beta) - log(gamma(alpha)) - ...
-        (alpha + 1).*log(s) - beta./s;
+    logInverseGammaOutput = logVal1 + logVal2 + logVal3 - log(gamma(alpha));
 elseif alpha > 1
-        logInverseGammaOutput = alpha*log(beta) - log(gamma(1)) + sum(1:(alpha -1)) - ...
-        (alpha + 1).*log(s) - beta./s;
     
+    logInverseGammaOutput = logVal1 + logVal2 + logVal3 - log(gamma(alpha - n)) ...
+        - sum(log(1:(alpha -1)));
 end
 
 end
