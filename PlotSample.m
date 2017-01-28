@@ -31,11 +31,11 @@ for k=1:numberOfCircles
     
     set(gca,'fontsize',14)
 
-    plot(xCoord, yCoord, 'DisplayName', strcat('cos(x)' , num2str(8k)))    
+    plot(xCoord, yCoord, 'DisplayName', strcat('k=' , num2str(k), ': ', num2str(fractionOutside)))    
     
 end
-
-    legend('show');
+h = findobj(gca,'Type','line');
+    legend(h([3 2 1]));
 
 %samplePlot;
 end
