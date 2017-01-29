@@ -31,9 +31,10 @@ for k=1:numberOfCircles
     
     set(gca,'fontsize',14)
 
-    plot(xCoord, yCoord, 'DisplayName', strcat('k=' , num2str(k), ':  ', num2str(fractionOutside)))
+    plot(xCoord, yCoord, 'DisplayName', strcat('k=' , num2str(k), ': ', num2str(fractionOutside)))
     xlabel('$x_1$','Interpreter', 'LaTex')
     ylabel('$x_2$','Interpreter', 'LaTex')
+
     
 end
 h = findobj(gca,'Type','line');
