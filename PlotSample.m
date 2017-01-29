@@ -1,4 +1,4 @@
-function [ samplePlot ] = PlotSample(x)
+function PlotSample(x)
 hold on;
 
 [mu, sigma] = sge(x);
@@ -7,8 +7,7 @@ numSamples = length(x);
 
 scatter(x(:,1), x(:,2), '.');
 
-pointsOutsideCircle = zeros(numSamples, numberOfCircles);
-
+pointsOutsideCircle = zeros(numSamples, numberOfCircles); 
 
 xCenter = mu(1);
 yCenter = mu(2);
@@ -37,7 +36,5 @@ for k=1:numberOfCircles
 end
 h = findobj(gca,'Type','line');
     legend(h([3 2 1]));
-
-%samplePlot;
 end
 

@@ -1,9 +1,9 @@
-%% a)
-clf;
+%% Olof Ekborg, Johan Björk
+clf, close all, clc, clear all;
 load 'dataset1.mat';
-
+%% a)
 mu = mean(x);
-sigma = linspace(0.01, 1, 1000);
+sigma = linspace(0.01, 20, 1000);
 maxSigma = max(sigma);
 
 xLength = length(x);
