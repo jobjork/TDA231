@@ -64,10 +64,10 @@ MA=exp(LogInverseGamma(s_hat_a,alphaPosteriorA,betaPosteriorA));
 
 % Model B
 alpha=10; beta=1; 
-alphaPosteriorA = alpha + xLength ;
-betaPosteriorA = beta + (1/2)*sum(sum((x-repmat(mu, xLength, 1)).^2));
+alphaPosteriorB = alpha + xLength ;
+betaPosteriorB = beta + (1/2)*sum(sum((x-repmat(mu, xLength, 1)).^2));
 
-MB=exp(LogInverseGamma(s_hat_a,alphaPosteriorA,betaPosteriorA));
+MB=exp(LogInverseGamma(s_hat_b,alphaPosteriorB,betaPosteriorB));
 
 % Bayes factor
 K=MA/MB
