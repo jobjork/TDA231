@@ -3,7 +3,7 @@ clf, close all, clc, clear all;
 load 'dataset1.mat';
 %% a)
 mu = mean(x);
-sigma = linspace(0.01, 20, 1000);
+sigma = linspace(1e-6, 1e3, 1e7);
 maxSigma = max(sigma);
 
 xLength = length(x);
@@ -34,6 +34,7 @@ plot(sigma, posteriorA, 'b')
 set(gca,'fontsize', 15);
 xlabel('$\sigma^2$','Interpreter', 'LaTex')
 title('$\alpha_a=1$, $\beta_a=1$','Interpreter', 'LaTex')
+axis([0 1 0 40]);
 
 subplot(1,2,2)
 hold on;
@@ -42,6 +43,7 @@ plot(sigma, posteriorB, 'b')
 set(gca,'fontsize', 15)
 xlabel('$\sigma^2$','Interpreter', 'LaTex')
 title('$\alpha_b=10$, $\beta_b=1$','Interpreter', 'LaTex')
+axis([0 1 0 40]);
 
 %% b)
 
