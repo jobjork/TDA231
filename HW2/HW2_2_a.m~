@@ -24,6 +24,14 @@ for k=1:kFold
     
 end
 
+validationSet = samples(1,:);
+trainingSet = samples(2:end, :);
+
+
+
+
+
+
 
 
 
