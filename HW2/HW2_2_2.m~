@@ -1,0 +1,5 @@
+%% 2.1 d) cross-validation of b)
+
+k=5; % Number of folds
+
+sample=randsample(length(y),length(y)/k)
