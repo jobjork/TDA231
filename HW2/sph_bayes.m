@@ -11,11 +11,11 @@ n2=length(x2); % Number of training data with label -1
 mu2=mean(x2);
 Sigma2=sqrt(sum(sum((x2-repmat(mu2, n2, 1)).^2))/(p*n2))*eye(3);
 
-L1=mvnpdf(Xtest,mu1,Sigma1); % Likelihood that Xtest has label +1
-L2=mvnpdf(Xtest,mu2,Sigma2); % Likelihood that Xtest has label +1
+P1=mvnpdf(Xtest,mu1,Sigma1); % Likelihood that Xtest has label +1
+P2=mvnpdf(Xtest,mu2,Sigma2); % Likelihood that Xtest has label +1
 
-P1=L1/(L1+L2);
-P2=L2/(L1+L2);
+%P1=L1/(L1+L2);
+%P2=L2/(L1+L2);
 
 if P1>P2
     Ytest=1;
