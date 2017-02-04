@@ -1,5 +1,5 @@
-function [arr] = var_array(data,image,digit)
-data_scale=data(:,image,digit)/255; % Scaling the pixels to range [0,1]
+function [arr] = var_array(data,im,dig)
+data_scale=data(:,im,dig)/255; % Scaling the pixels to range [0,1]
 
 arr=zeros(32,1);
 for i=1:32

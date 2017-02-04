@@ -47,15 +47,11 @@ end
 TOTAL_ERROR=error/(partitionLength*k*B)
 
 %% Cross validation 2.2 b)
-
+load digits.mat
 totalSamples = length(data(1,:,1));
 kFold = 5;
-numberOfTrials = 100;
+numberOfTrials = 1;
 error5=0; error8=0;
-
-classifications5 = zeros(numberOfTrials*kFold, 1);
-classifications8 = zeros(numberOfTrials*kFold, 1);
-
 
 for i=1:numberOfTrials
     
@@ -69,56 +65,33 @@ for i=1:numberOfTrials
         
     end
     
-    testSet5=data(:,samples(:,k),5);
+    testSet=data(:,samples(:,k),:);
     train=samples;
     train(:,k)=[];
-    trainSet5=data(:,train,5);
+    trainSet=data(:,train,:);
+    nbr_images=length(trainSet);
     
-    testSet8=data(:,samples(:,k),8);
-    train=samples;
-    train(:,k)=[];
-    trainSet8=data(:,train,8);
-    
-    nbr_images=length(trainSet5);
+    % Training variances
     var_arr_5_train=zeros(32,nbr_images);
     var_arr_8_train=zeros(32,nbr_images);
     for n=1:nbr_images
-        
-        data_scale5_train=trainSet5(:,n)/255; % Scaling the pixels to range [0,1] for images of digit 5
-        data_scale8_train=trainSet8(:,n)/255; % Scaling the pixels to range [0,1] for images of digit 8
-        
-        arr5=zeros(32,1);
-        arr8=zeros(32,1);
-        for j=1:32
-            arr5(j)=var(data_scale5_train(j:(j+15))); % Variance of each row and column of an image of digit 5
-            arr8(j)=var(data_scale8_train(j:(j+15))); % Variance of each row and column of an image of digit 8
-        end
-        var_arr_5_train(:,n)=arr5;
-        var_arr_8_train(:,n)=arr8;
+        var_arr_5_train(:,n)=var_array(trainSet,n,5);
+        var_arr_8_train(:,n)=var_array(trainSet,n,8);
     end
     
     mu5_train=mean(var_arr_5_train');
     mu8_train=mean(var_arr_8_train');
+    %
     
-    
-    %%%%%%%%%%%%%%%%%%%%%%%
+    % Test variances
     nbr_images=length(testSet5(1,:));
     var_arr_5_test=zeros(32,nbr_images);
     var_arr_8_test=zeros(32,nbr_images);
     for n=1:nbr_images
-        data_scale5_val=testSet5(:,n)/255; % Scaling the pixels to range [0,1] for images of digit 5
-        data_scale8_val=testSet8(:,n)/255; % Scaling the pixels to range [0,1] for images of digit 8
-        
-        arr5=zeros(32,1);
-        arr8=zeros(32,1);
-        for j=1:32
-            arr5(j)=var(data_scale5_val(j:(j+15))); % Variance of each row and column of an image of digit 5
-            arr8(j)=var(data_scale8_val(j:(j+15))); % Variance of each row and column of an image of digit 8
-        end
-        var_arr_5_test(:,n)=arr5;
-        var_arr_8_test(:,n)=arr8;
+        var_arr_5_test(:,n)=var_array(testSet,n,5);
+        var_arr_8_test(:,n)=var_array(testSet,n,8);
     end
-    %%%%%%%%%%%%%%
+    %
     
     for b=1:length(var_arr_5_test)
         
