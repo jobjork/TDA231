@@ -1,4 +1,5 @@
 %% Plot of data
+load dataset2.mat
 x1=x(y==1,:);
 x2=x(y==-1,:);
 plot3(x1(:,1),x1(:,2),x1(:,3),'r*','DisplayName','$y=1$')
@@ -45,39 +46,7 @@ for b=1:B
 end
 TOTAL_ERROR=error/(partitionLength*k*B)
 
-%% 2.2 b)
-
-nbr_images=length(data(1,:,1));
-var_arr_5=zeros(32,nbr_images);
-var_arr_8=zeros(32,nbr_images);
-for n=1:nbr_images
-    
-    data_scale5=data(:,n,5)/255; % Scaling the pixels to range [0,1] for images of digit 5
-    data_scale8=data(:,n,8)/255; % Scaling the pixels to range [0,1] for images of digit 8
-    
-    arr5=zeros(32,1);
-    arr8=zeros(32,1);
-    for i=1:32
-        arr5(i)=var(data_scale5(i:(i+15))); % Variance of each row and column of an image of digit 5
-        arr8(i)=var(data_scale8(i:(i+15))); % Variance of each row and column of an image of digit 8
-    end
-    var_arr_5(:,n)=arr5;
-    var_arr_8(:,n)=arr8;
-end
-
-mu5=mean(var_arr_5');
-mu8=mean(var_arr_8');
-%
-
-classifications5 = new_classifier(var_arr_5, mu5, mu8);
-
-classifications8 = new_classifier(var_arr_8, mu8, mu5);
-
-[classDist5, types5] = hist(classifications5, unique(classifications5));
-[classDist8, types8] = hist(classifications8, unique(classifications8));
-
-
-%% Cross validation
+%% Cross validation 2.2 b)
 
 totalSamples = length(data(1,:,1));
 kFold = 5;
@@ -163,14 +132,3 @@ end
 
 Error5=error5/(numberOfTrials*length(var_arr_5_test)*kFold)
 Error8=error8/(numberOfTrials*length(var_arr_5_test)*kFold)
-%%
-[classDist5, types5] = hist(classifications5, unique(classifications5));
-[classDist8, types8] = hist(classifications8, unique(classifications8));
-
-subplot(1,2,1)
-hist(classifications5, unique(classifications5));
-title('Classicication of number 5 vs 8', 'Interpreter', 'latex')
-subplot(1,2,2)
-hist(classifications8, unique(classifications8));
-title('Classicication of number 8 vs 5', 'Interpreter', 'latex')
-
