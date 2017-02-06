@@ -27,15 +27,8 @@ classifications8 = zeros(partitionLength, 1);
 sampleIndices = randperm(totalSamples);
 partitionLength = floor(totalSamples/kFold);
 
-samples = zeros(partitionLength, kFold);
-
-for k=1:kFold
-    samples(:,k) = sampleIndices(((k-1)*partitionLength +1):k*partitionLength);
-    
-end
-
-validationSet = samples(:,1);
-trainingSet = samples(:, (2:end));
+validationSet = sampleIndices(1:partitionLength);
+trainingSet = sampleIndices(partitionLength+1:end);
 
 mu5 = mean(data(:, trainingSet(1:end), 5)');
 mu8 = mean(data(:, trainingSet(1:end), 8)');
