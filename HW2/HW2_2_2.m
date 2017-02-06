@@ -96,7 +96,6 @@ for b=1:numValidationImages
     end
     
     % 2.2.d) Classification with a multivariate Gaussian classifier
-    % Will yield a lower classification error than 
     if MultivariateGaussian(var_arr_5_test(:,b)', var_arr_5_train', var_arr_8_train')~=1
         bayesError5 = bayesError5 + 1;
     end
