@@ -23,7 +23,7 @@ for n=1:partitionLength
     end
     
     
-    Z = new_classifier(testX(n,:),mean(trainX(trainY==1,:)),mean(trainX(trainY==-1,:)));
+    Z = new_classifier(testX(n,:),mean(trainX(y==1)),mean(trainY));
     if Z~=y(sample(n))
         newClError = newClError + 1;
     end

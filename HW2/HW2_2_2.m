@@ -58,6 +58,7 @@ load digits.mat
 totalSamples = length(data(1,:,1));
 kFold = 5;
 error5=0; error8=0;
+bayesError5=0; bayesError8=0;
     
 sampleIndices = randperm(totalSamples);
 partitionLength = floor(totalSamples/kFold);
@@ -101,6 +102,12 @@ for b=1:length(var_arr_5_test)
         error5 = error5+1;
     elseif new_classifier(var_arr_8_test(:,b), mu8_train, mu5_train)~=1
         error8 = error8+1;
+    end
+    
+    if new_classifier(var_arr_5_test(:,b), mu5_train, mu8_train)~=1
+        bayesError5 = bayesError5+1;
+    elseif new_classifier(var_arr_8_test(:,b), mu8_train, mu5_train)~=1
+        bayesError8 = bayesError8+1;
     end
 end
 
