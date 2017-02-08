@@ -1,4 +1,5 @@
 %% 2.2 a) Classification error rate for new_classifier
+clc;
 load digits.mat
 
 mu5 = mean(data(:, :, 5)');
