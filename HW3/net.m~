@@ -155,20 +155,16 @@ function res = grad(model, data, wd_coefficient)
   
   disp('Hej1')
   
-  disp(size(data.inputs))
+  disp(size(sum(data.inputs)))
   disp(size(data.targets))
   disp(size(class_input))
   disp(size(hid_output))
-  grad_hid_cl = hid_output*data.inputs';
+  grad_hid_cl = (hid_output)*sum(data.inputs);
   disp('Hej1.1')
   grad_hid_wd = wd_coefficient*model.input_to_hid;
   disp('Hej2')
-  
-  disp(size(class_prob))
-  disp(size(class_input)) 
-  disp(size(data.targets))
 
-  grad_class_cl = (class_prob - data.targets)*hid_output';
+  grad_class_cl = (class_prob - data.targets).*sum(class_input);
   grad_class_wd = wd_coefficient*model.hid_to_class;
   disp('Hej3')
     
