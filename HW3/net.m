@@ -123,69 +123,26 @@ function res = grad(model, data, wd_coefficient)
   % res.input_to_hid and res.hid_to_class. However, the contents of those matrices are gradients 
   % (d cost by d model parameter), instead of model parameters.
 
-
   % Forward propagation
   hid_input = model.input_to_hid * data.inputs; 
   hid_output = logistic(hid_input);
   class_input = model.hid_to_class * hid_output;
   log_class_prob = logsoftmax(class_input);
   class_prob = exp(log_class_prob); 
-  % class_prob is the model output.
-  
-  % Our code starts here
-  
-  %{
-  disp('hid_input');
-  disp(size(hid_input));
-  disp('hid_output');
-  disp(size(hid_output)); 
-  disp('class_input');
-  disp(size(class_input));
-  disp('log_class_prob');
-  disp(size(log_class_prob));
-  disp('class_prob');
-  disp(size(class_prob));
-  
-  disp(model)
-  %}
-  
-  disp('Hej5')
-  disp(size(model.input_to_hid * wd_coefficient))
-  disp(size(model.hid_to_class * wd_coefficient))
-  
-  disp('Hej1')
-  
-  disp(size(data.inputs))
-  disp(size(data.targets))
-  disp(size(class_input))
-  disp(size(hid_output))
-  grad_hid_cl = hid_output*data.inputs';
-  disp('Hej1.1')
-  grad_hid_wd = wd_coefficient*model.input_to_hid;
-  disp('Hej2')
-  
-  disp(size(class_prob))
-  disp(size(class_input)) 
-  disp(size(data.targets))
 
-  grad_class_cl = (class_prob - data.targets)*hid_output';
-  grad_class_wd = wd_coefficient*model.hid_to_class;
-  disp('Hej3')
-    
-  disp(size(grad_hid_cl))
-  disp(size(grad_hid_wd))  
-  
-  disp(size(grad_class_cl))
-  disp(size(grad_class_wd))  
-  grad_hid = grad_hid_cl + grad_hid_wd;
-  grad_class = grad_class_cl + grad_class_wd;
+  [numClasses, numInputs] = size(class_prob);  
 
-  % Right now the function just returns a lot of zeros. Your job is to change that.
-  res.input_to_hid = model.input_to_hid * wd_coefficient;
-  res.hid_to_class = model.hid_to_class * wd_coefficient;
-  % ---------------------------------------
+  grad_class_cl1 = (class_prob - data.targets);
+  grad_class_cl = (1/numInputs)*grad_class_cl1*hid_output';
+  
+  grad_hid_cl1 = (class_prob - data.targets)'*model.hid_to_class;
+  grad_hid_cl2 = (hid_output - hid_output.^2);
+  grad_hid_cl = 1/numInputs*(grad_hid_cl1'.*grad_hid_cl2)*data.inputs';
+
+  res.input_to_hid = grad_hid_cl + model.input_to_hid * wd_coefficient;
+  res.hid_to_class = grad_class_cl + model.hid_to_class * wd_coefficient;
+
 end
-
 %% Activation functions
 function res = logistic(input)
   res = 1 ./ (1 + exp(-input));

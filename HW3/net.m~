@@ -123,17 +123,17 @@ function res = grad(model, data, wd_coefficient)
   % res.input_to_hid and res.hid_to_class. However, the contents of those matrices are gradients 
   % (d cost by d model parameter), instead of model parameters.
 
-
   % Forward propagation
   hid_input = model.input_to_hid * data.inputs; 
   hid_output = logistic(hid_input);
   class_input = model.hid_to_class * hid_output;
   log_class_prob = logsoftmax(class_input);
   class_prob = exp(log_class_prob); 
+  
+  %disp(log_class_prob)
   % class_prob is the model output.
   
   % Our code starts here
-  
   %{
   disp('hid_input');
   disp(size(hid_input));
@@ -141,44 +141,100 @@ function res = grad(model, data, wd_coefficient)
   disp(size(hid_output)); 
   disp('class_input');
   disp(size(class_input));
-  disp('log_class_prob');
-  disp(size(log_class_prob));
   disp('class_prob');
   disp(size(class_prob));
   
   disp(model)
-  %}
   
   disp('Hej5')
-  disp(size(model.input_to_hid * wd_coefficient))
-  disp(size(model.hid_to_class * wd_coefficient))
+  disp(size(model.input_to_hid))
+  disp(size(model.hid_to_class))
+    %}
+  [numClasses, numInputs] = size(class_prob);  
+  %{
+  disp('Test dimensions');
   
-  disp('Hej1')
+  disp(size((class_prob(:,1) - data.targets(:,1))));
+  disp(size(diag(class_prob(:,1))));
+  disp(size(class_prob(:,1)*class_prob(:,1)'));
+  disp(size(hid_output(:,1)));
+  %}
+  numHiddenNodes = 7;
+  numInputElements = 256;
   
-  disp(size(sum(data.inputs)))
-  disp(size(data.targets))
-  disp(size(class_input))
-  disp(size(hid_output))
-  grad_hid_cl = (hid_output)*sum(data.inputs);
-  disp('Hej1.1')
-  grad_hid_wd = wd_coefficient*model.input_to_hid;
-  disp('Hej2')
+  grad_class_cl1 = (class_prob - data.targets);
+  disp(size((grad_class_cl1)))
+  disp(size((hid_output')))
+  grad_class_cl = (1/numInputs)*grad_class_cl1*hid_output';
+  
+  disp(size(grad_class_cl));
+  disp('fa')
+  dmodel.hid_to_class)
+  
+  grad_hid_cl1 = (class_prob - data.targets)*model.hid_to_class';
+  disp(size(grad_hid_cl1))
+  grad_hid_cl2 = (hid_output - hid_output.^2);
+  disp(size(grad_hid_cl2))
 
-  grad_class_cl = (class_prob - data.targets).*sum(class_input);
-  grad_class_wd = wd_coefficient*model.hid_to_class;
-  disp('Hej3')
+  
+  
+  %disp(size(grad_class_cl1));
+  %disp(size(model.hid_to_class));
+  %grad_class_cl2 = mean(hid_output');
+  
+  %logRegDerivative = (diag(mean(hid_output'))-(mean(hid_output').*mean(hid_output')));
+  %disp(size(logRegDerivative))
+  %grad_hid_cl1 = (grad_class_cl1*model.hid_to_class)*logRegDerivative;
+  %grad_hid_cl1 = mean((1-class_prob').*(data.targets)')*model.hid_to_class...
+  %    *logRegDerivative;
+  %grad_hid_cl2 = mean(data.inputs');
+  %disp(size(grad_hid_cl1));
+  %disp(size(grad_hid_cl2));
+
+  %disp(size(grad_class_cl2));
+  %grad_class_cl1 = zeros(numClasses, numInputs);
+  %grad_class_cl2 = zeros(numHiddenNodes, numInputs);
+  
+  %grad_hid_cl1 = zeros(numHiddenNodes, numInputs);
+  %grad_hid_cl2 = zeros(numInputElements, numInputs);
+ 
+%{
+  for input=1:numInputs
+      
+    grad_class_cl1(:, input) = (class_prob(:,input) - data.targets(:,input))'...
+      *(diag(class_prob(:,input))-(class_prob(:,input).*class_prob(:,input)'));      
+    grad_class_cl2(:, input) = hid_output(:,input); 
+
+    logRegDerivative = (diag(hid_output(:,input))-(hid_output(:,input).*hid_output(:,input)'));
+
+    grad_hid_cl1(:,input) = (grad_class_cl1(:, input)'*model.hid_to_class)*logRegDerivative;
+    grad_hid_cl2(:, input) = data.inputs(:, input);
     
-  disp(size(grad_hid_cl))
-  disp(size(grad_hid_wd))  
+  end
+%}
   
-  disp(size(grad_class_cl))
-  disp(size(grad_class_wd))  
-  grad_hid = grad_hid_cl + grad_hid_wd;
-  grad_class = grad_class_cl + grad_class_wd;
-
+  % This one passes the training set
+  %grad_class_cl1 = ((class_prob - data.targets))...
+  %    *class_prob'*(repmat(eye(10), 1, 100) - class_prob);
+  
+  %disp('Fifth');
+  %disp(size(sum(hid_output')))
+  
+  %disp('Fourth sum')
+  %disp(size(sum(grad_class_cl1')))
+  %disp('Fifth sum')
+  %disp(size(sum((grad_class_cl2'))))
+  
+  %disp('Hej1.1')
+  disp(size(grad_hid_cl1))
+  disp(size(grad_hid_cl2))
+  grad_hid_cl = (grad_hid_cl1.*grad_hid_cl2')';
+  disp('Hej3')
+  
+  disp(norm(grad_class_cl,2))
   % Right now the function just returns a lot of zeros. Your job is to change that.
-  res.input_to_hid = model.input_to_hid * wd_coefficient;
-  res.hid_to_class = model.hid_to_class * wd_coefficient;
+  res.input_to_hid = grad_hid_cl + model.input_to_hid * wd_coefficient;
+  res.hid_to_class = grad_class_cl + model.hid_to_class * wd_coefficient;
   % ---------------------------------------
 end
 
