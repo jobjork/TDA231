@@ -24,4 +24,5 @@ Aeq=[1 1 1 -1 -1 -1];
 beq=0;
 lb=zeros(6,1);
 
+
 alpha=quadprog(H,f,A,b,Aeq,beq,lb);
