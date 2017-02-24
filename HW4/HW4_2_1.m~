@@ -1,5 +1,4 @@
 %% Problem 2.1 a)
-clf, close all, clc
 load d1b.mat
 C=10; % Box-constraint parameter
 
@@ -21,7 +20,7 @@ ylabel('$x_{2}$','Interpreter', 'LaTex')
 title(strcat('Problem 1.2, C=', num2str(C)),'Interpreter', 'LaTex')
 
 % Problem 2.1 c)
-bias=svmStruct.Bias
+bias=svmStruct.Bias;
 
 % Problem 2.1 d) 
 w1=sum(svmStruct.SupportVectors(:,1).*svmStruct.Alpha);
