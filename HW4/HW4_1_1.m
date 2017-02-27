@@ -6,7 +6,7 @@ line=linspace(-1,5);
 scatter(x1(:,1),x1(:,2),'b','DisplayName','$y=1$')
 hold on
 scatter(x2(:,1),x2(:,2),'r','DisplayName','$y=-1$')
-plot(line,3-line,'g--','DisplayName','Hyperplane')
+plot(line,3-line,'k','DisplayName','Decision Boundary')
 axis([-1 5 -1 5])
 title('Problem 1.1','Interpreter','LaTex')
 xlabel('$x_{1}$','Interpreter', 'LaTex')
