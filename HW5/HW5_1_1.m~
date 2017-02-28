@@ -1,0 +1,12 @@
+%% Problem 1.1 b)
+load hw5_p1a.mat;
+k=2;
+tol=1e-4;
+clusters1=k_means(X,k,tol, false, 0);
+clusters2=k_means(X,k,tol, true, 2);
+
+subplot(1,2,1)
+scatter(X(clsu))
+
+subplot(1,2,1)
+scatter()

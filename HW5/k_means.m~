@@ -18,9 +18,22 @@ while ~isempty(varargin)
     end
     
     if strcmp(varargin{1}, 'kerneltype')
-        kernel = varargin{2};
+        tol = varargin{2};
     end        
-    disp('Hej')
+        
+    
+    
+    switch (varargin{1})
+        case 
+            
+        case ''
+            iterLimit = true;
+            numIters = varargin{1}(2);
+        case ''
+             = varargin{1}(2);
+        otherwise
+            error(['Unexpected option: ' varargin{1}(1)])
+    end
     varargin(1:2) = [];
 end
 
