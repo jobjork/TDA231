@@ -1,28 +1,4 @@
-function [res] = k_means(data, k, varargin)
-
-tol = 1e-4;
-iterLimit = false;
-numIters = 0;
-kernel = 'linear';
-
-disp(varargin{1})
-while ~isempty(varargin)
-    
-    if strcmp(varargin{1}, 'tol')
-        tol = varargin{2};
-    end
-    
-    if strcmp(varargin{1}, 'numiterations')
-        iterLimit = true;
-        numIters = varargin{2};
-    end
-    
-    if strcmp(varargin{1}, 'kerneltype')
-        kernel = varargin{2};
-    end        
-    disp('Hej')
-    varargin(1:2) = [];
-end
+function [res] = k_means(data, k, tol, iterLimit, numIters)
 
 [n,m]=size(data);
 

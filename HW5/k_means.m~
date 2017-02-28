@@ -18,23 +18,9 @@ while ~isempty(varargin)
     end
     
     if strcmp(varargin{1}, 'kerneltype')
-        tol = varargin{2};
+        kernel = varargin{2};
     end        
-        
-    
-    
-    switch (varargin{1})
-        case 
-            
-        case ''
-            iterLimit = true;
-            numIters = varargin{1}(2);
-        case ''
-             = varargin{1}(2);
-        otherwise
-            error(['Unexpected option: ' varargin{1}(1)])
-    end
-    varargin(1:2) = [];
+
 end
 
 [n,m]=size(data);
