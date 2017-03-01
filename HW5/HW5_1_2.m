@@ -29,7 +29,7 @@ for cluster = 1:k
     wordIndices2 =  find(idx == k);
     wordPairs2 = nchoosek(wordIndices2, 2);
     
-    numPairs = ismember(wordPairs2, wordPairs);
+    numPairs = ismember(wordPairs2, wordPairs, 'cols');
     
 end
 
