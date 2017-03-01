@@ -14,6 +14,7 @@ end
 %% b)
 k=10;
 numRuns = 10;
+numPairsInitial = zeros(numRuns, 1);
 numPairs = zeros(k, numRuns);
 % This one will take a while
 for count=1:numRuns
@@ -26,6 +27,7 @@ for count=1:numRuns
     
     wordIndices = find(idx == cluster_calv);
     wordPairs = nchoosek(wordIndices, 2);
+    numPairsInitial(count) = length(wordPairs);
     
     [idx2,C2] = kmeans(wordembeddings, k, 'Replicates', 1);
     
@@ -42,4 +44,24 @@ for count=1:numRuns
         disp(numPairs(cluster));
         
     end
+end
+
+fVec = sum(numPairs)./numPairsInitial';
+fMean = mean(fVec);
+
+%%
+numSamples = 1000;
+[~, dims] = size(wordembeddings);
+projDims = 2;
+sampleIndices = randsample(numSamples, numSamples);
+wordSample = vocab{sampleIndices};
+wordCoords = wordembeddings(sampleIndices,:);
+wordCluster = idx(sampleIndices);
+
+projectedPoints = tsne(wordCoords, [], projDims, dims, 30);
+%%
+hold on
+for plotCluster =1:k
+    scatter(projectedPoints(wordCluster == plotCluster, 1), ...
+        projectedPoints(wordCluster == plotCluster, 2))
 end
