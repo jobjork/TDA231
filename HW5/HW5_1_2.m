@@ -17,7 +17,8 @@ numRuns = 10;
 numPairs = zeros(k, numRuns);
 % This one will take a while
 for count=1:numRuns
-    
+    disp('Run number')
+    disp(count)
     [idx,C] = kmeans(wordembeddings,k,'Replicates',1);
     c_index_calv = strfind(vocab, 'cavalry');
     i_calvary=find(not(cellfun('isempty' ,c_index_calv)));
