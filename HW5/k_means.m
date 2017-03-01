@@ -33,24 +33,22 @@ while term == false
         end
     end
     
-    [minValue,minIndex] = min(d');
+    [~,clusterIndex] = min(d');
     
     % Assign each data point to closest mu
     z=zeros(n,k);
-    for i=1:length(minIndex)
-        z(i,minIndex(i))=1;
+    for clusterNumber=1:k
+        z(:,clusterNumber) = (clusterIndex == clusterNumber);
     end
-    
-   
     
     % Update mu
     muUpdate= z'*data./sum(z)';
     
-    if norm(mu-muUpdate,2) < tol % Termination condition
+    if norm(mu - muUpdate,2) < tol % Termination condition
         term = true;
     end
     
-    if iterLimit && iter==numIters
+    if iterLimit && iter == numIters
         term=true;
     end
     
@@ -58,7 +56,6 @@ while term == false
     
 end
 
-res = minIndex;
+res = clusterIndex;
 
 end
-

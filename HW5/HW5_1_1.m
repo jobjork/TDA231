@@ -13,5 +13,23 @@ hold on
 plot(X(clusters1==2, 1), X(clusters1==2, 2), 'b.', 'MarkerSize', 10)
 scatter(X(new_assign,1), X(new_assign,2), 150, 'ks');
 title('Cluster assignment at convergence ','Interpreter','LaTex')
+leg = legend('Class 1', 'Class 2');
+set(leg,'Interpreter','LaTex')
+set(gca,'fontsize', 11)
+xlabel('$x_{1}$','Interpreter', 'LaTex')
+ylabel('$x_{2}$','Interpreter', 'LaTex')
+
+%% Problem 1.1 d)
+load hw5_p1b.mat;
+k=2;
+clusters3=k_means_rbf(X, k);
+
+plot(X(clusters3==1, 1), X(clusters3==1, 2), 'r.', 'MarkerSize', 10)
+hold on
+plot(X(clusters3==2, 1), X(clusters3==2, 2), 'b.', 'MarkerSize', 10)
+title('Clustering using RBF kernel','Interpreter','LaTex')
+leg = legend('Class 1', 'Class 2');
+set(leg,'Interpreter','LaTex')
+set(gca,'fontsize', 11)
 xlabel('$x_{1}$','Interpreter', 'LaTex')
 ylabel('$x_{2}$','Interpreter', 'LaTex')
