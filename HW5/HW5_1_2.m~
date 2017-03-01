@@ -25,11 +25,7 @@ wordPairs = nchoosek(wordIndices, 2);
 [idx2,C2] = kmeans(wordembeddings, k, 'Replicates', 1);
 
 for cluster = 1:k
-   
-    wordIndices2 =  find(idx == k);
-    wordPairs2 = nchoosek(wordIndices2, 2);
     
-    numPairs = ismember(wordPairs2, wordPairs);
     
 end
 
