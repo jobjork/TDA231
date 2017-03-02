@@ -18,7 +18,6 @@ for i=1:k
 end
 
 %% b)
-tic
 k=10;
 numRuns = 10;
 numPairs = zeros(k, numRuns);
@@ -28,8 +27,8 @@ i_calvary=find(not(cellfun('isempty' ,c_index_calv)));
 f=zeros(numRuns,1);
 
 for count=1:numRuns
-    %disp('Run number')
-    %disp(count)
+    disp('Run number')
+    disp(count)
     [idx,C] = kmeans(wordembeddings,k,'Replicates',1);
     cluster_calv=idx(i_calvary);
     
@@ -62,4 +61,3 @@ for count=1:numRuns
 end
 
 mean(f)
-toc
