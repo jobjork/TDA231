@@ -18,7 +18,6 @@ for i=1:k
 end
 
 %% b)
-tic
 k=10;
 numRuns = 10;
 numPairs = zeros(k, numRuns);
@@ -34,32 +33,32 @@ for count=1:numRuns
     cluster_calv=idx(i_calvary);
     
     wordIndices = find(idx == cluster_calv);
-    wordPairs = length(nchoosek(wordIndices, 2));
+    nbr_pairs = length(wordIndices);
+    wordPairs = nbr_pairs*(nbr_pairs-1)/2;
     
     [idx2,C2] = kmeans(wordembeddings, k, 'Replicates', 1);
     
     wordPairs2=zeros(k,1);
     for cluster = 1:k
         wordIndices2 = find(idx2 == cluster);
-        nbr_pairs=sum(ismember(wordIndices2, wordIndices, 'rows')); % number of pairs both in C1 and C2
-        if nbr_pairs>=2
-        wordPairs2(cluster) = nchoosek(nbr_pairs, 2);
+        nbr_pairs2=sum(ismember(wordIndices2, wordIndices, 'rows')); % number of pairs both in C1 and C2
+        if nbr_pairs2>=2
+            wordPairs2(cluster) = nbr_pairs2*(nbr_pairs2-1)/2;
         else
-            nbr_pairs=0;
+            nbr_pairs2=0;
         end
-%         disp('Before pairs compute');
-%         wordPairs2 = nchoosek(wordIndices2, 2);
-%         disp('After pairs compute');
-%         disp('Before supercompute');
-%         disp(size(ismember(wordPairs2, wordPairs, 'rows')));
-%         numPairs(cluster, count) = sum(ismember(wordPairs2, wordPairs, 'rows'));
-%         disp('After supercompute');
-%         disp(numPairs(cluster));
-%         
+        %         disp('Before pairs compute');
+        %         wordPairs2 = nchoosek(wordIndices2, 2);
+        %         disp('After pairs compute');
+        %         disp('Before supercompute');
+        %         disp(size(ismember(wordPairs2, wordPairs, 'rows')));
+        %         numPairs(cluster, count) = sum(ismember(wordPairs2, wordPairs, 'rows'));
+        %         disp('After supercompute');
+        %         disp(numPairs(cluster));
+        %
     end
     
     f(count)=sum(wordPairs2)/wordPairs;
 end
 
-mean(f)
-toc
+average_fraction=mean(f);
