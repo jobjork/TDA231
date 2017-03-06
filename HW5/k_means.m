@@ -1,12 +1,12 @@
 function [res] = k_means(data, k, tol, iterLimit, numIters)
 
-[n,m]=size(data);
+[n,m] = size(data);
 
-if k>n
+if k > n
     error('Error: k cannot be larger than number of data points');
-elseif k<=0
-    error('Error: kmust be positive')
-elseif k==n
+elseif k  <= 0
+    error('Error: k must be positive')
+elseif k == n
     res=1:n;
     return
 end
@@ -14,8 +14,7 @@ end
 minCoords = min(data);
 maxCoords = max(data);
 
-% Intilization of centroids
-mu = (maxCoords-minCoords).*rand(k,m)+minCoords; % kxm
+mu = (maxCoords-minCoords).*rand(k,m)+minCoords; 
 term = false; 
 iter = 0;
 
@@ -25,34 +24,31 @@ while term == false
         iter = iter+1;
     end
     
-    % Euclidean distances
-    d = zeros(n,k); 
+    squareDistance = zeros(n,k); 
     for i=1:n
         for j=1:k
-            d(i,j)=dot((data(i,:)-mu(j,:)),data(i,:)-mu(j,:));
+            squareDistance(i,j) = dot((data(i,:)-mu(j,:)),data(i,:)-mu(j,:));
         end
     end
     
-    [~,clusterIndex] = min(d');
+    [~,clusterIndex] = min(squareDistance');
     
-    % Assign each data point to closest mu
-    z=zeros(n,k);
+    z = zeros(n,k);
     for clusterNumber=1:k
         z(:,clusterNumber) = (clusterIndex == clusterNumber);
     end
     
-    % Update mu
-    muUpdate= z'*data./sum(z)';
+    muUpdate = z'*data./sum(z)';
     
     if norm(mu - muUpdate,2) < tol % Termination condition
         term = true;
     end
     
     if iterLimit && iter == numIters
-        term=true;
+        term = true;
     end
     
-    mu=muUpdate;
+    mu = muUpdate;
     
 end
 

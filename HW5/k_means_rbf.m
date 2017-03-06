@@ -18,6 +18,7 @@ rbfKernel = @(xm, xn, sigma) exp(-(1/(2*sigma^2))*dot(xm-xn, xm-xn));
 
 kernelMatrix = zeros(n);
 
+% Pre-compute kernel values for all data points
 for m=1:n
     for l=1:n
         kernelMatrix(m,l) = rbfKernel(data(m,:), data(l,:), sigma);
